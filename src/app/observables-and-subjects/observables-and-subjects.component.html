@@ -1,0 +1,108 @@
+<div class="kitchen">
+    <h2>All you can eat!</h2>
+    <h3>Pizza beeing served: </h3>
+    <div>
+        <h4>{{this.kitchenShowcase}}</h4>
+    </div>
+</div>
+<div class="customers">
+    <div class="customer">
+        <button (click)='this.customer1()' mat-raised-button>Cold Observabled Customer<mat-icon>person</mat-icon></button>
+        <h4>{{pizza4Customer1}}</h4>
+    </div>
+    <div class="customer">
+        <button (click)='this.customer2()' mat-raised-button>Cold Observabled Customer<mat-icon>person</mat-icon></button>
+        <h4>{{pizza4Customer2}}</h4>
+    </div>
+    <div class="customer">
+        <button (click)='this.customer3()' mat-raised-button>Hot Observable Customer<mat-icon>person</mat-icon></button>
+        <h4>{{pizza4Customer3}}</h4>
+    </div>
+    <div class="customer">
+        <button (click)='this.customer4()' mat-raised-button>Hot Observable Customer<mat-icon>person</mat-icon></button>
+        <h4>{{pizza4Customer4}}</h4>
+    </div>
+</div>
+<div class="customers-table">
+    <div class="table">
+        <div class="chairs">
+            <div class="chair">
+                <mat-icon class="icon">person</mat-icon>
+                <h5>{{pizza4Table1Customer1}}</h5>
+            </div>
+            <div class="chair">
+                <mat-icon class="icon">person</mat-icon>
+                <h5>{{pizza4Table1Customer2}}</h5>
+            </div>
+        </div>
+        <div class="chairs">
+            <div class="chair">
+                <mat-icon class="icon">person</mat-icon>
+                <h5>{{pizza4Table1Customer3}}</h5>
+            </div>
+            <div class="chair">
+                <mat-icon class="icon">person</mat-icon>
+                <h5>{{pizza4Table1Customer4}}</h5>
+            </div>
+        </div>
+        <div class="buttonsTable">
+            <button style="margin-bottom: 1%;" *ngIf='this.pizzaService.table01.observers.length == 0' (click)='this.table01()' mat-raised-button>From Cold Service Subject Table<mat-icon>group</mat-icon></button>
+            <button style="margin-bottom: 1%;" *ngIf='this.pizzaService.table01.observers.length != 0' (click)='this.table01Ask4Pepperoni()' mat-raised-button>Ask for Pepperoni<mat-icon>campaign</mat-icon></button>
+            <button style="margin-bottom: 1%;" *ngIf='this.table01OrderSheet.length != 0' (click)='this.endServiceTable01()' mat-raised-button>Stop<mat-icon>close</mat-icon></button>
+        </div>
+    </div>
+    <div class="table">
+        <div class="chairs">
+            <div class="chair">
+                <mat-icon class="icon">person</mat-icon>
+                <h5>{{pizza4Table2Customer1}}</h5>
+            </div>
+            <div class="chair">
+                <mat-icon class="icon">person</mat-icon>
+                <h5>{{pizza4Table2Customer2}}</h5>
+            </div>
+        </div>
+        <div class="chairs">
+            <div class="chair">
+                <mat-icon class="icon">person</mat-icon>
+                <h5>{{pizza4Table2Customer3}}</h5>
+            </div>
+            <div class="chair">
+                <mat-icon class="icon">person</mat-icon>
+                <h5>{{pizza4Table2Customer4}}</h5>
+            </div>
+        </div>
+        <div class="buttonsTable">
+            <button style="margin-bottom: 1%;" *ngIf='this.pizzaService.table02.observers.length == 0' (click)='this.table02()' mat-raised-button>From Hot Service Subject Table<mat-icon>group</mat-icon></button>
+            <button style="margin-bottom: 1%;" *ngIf='this.pizzaService.table02.observers.length != 0' (click)='this.table02Ask4Pepperoni()' mat-raised-button>Ask for Pepperoni<mat-icon>campaign</mat-icon></button>
+            <button style="margin-bottom: 1%;" *ngIf='this.table02OrderSheet.length != 0' (click)='this.endServiceTable02()' mat-raised-button>Stop<mat-icon>close</mat-icon></button>
+        </div>
+    </div>
+    <div class="table">
+        <div class="chairs">
+            <div class="chair">
+                <mat-icon class="icon">person</mat-icon>
+                <h5>{{pizza4Table3Customer1}}</h5>
+            </div>
+            <div class="chair">
+                <mat-icon class="icon">person</mat-icon>
+                <h5>{{pizza4Table3Customer2}}</h5>
+            </div>
+        </div>
+        <div class="chairs">
+            <div class="chair">
+                <mat-icon class="icon">person</mat-icon>
+                <h5>{{pizza4Table3Customer3}}</h5>
+            </div>
+            <div class="chair">
+                <mat-icon class="icon">person</mat-icon>
+                <h5>{{pizza4Table3Customer4}}</h5>
+            </div>
+        </div>
+        <div class="buttonsTable">
+            <button style="margin-bottom: 1%;" *ngIf='this.pizzaService.table03.observers.length == 0' (click)='this.table03()' mat-raised-button>From Hot Service BehaviorSubject Table<mat-icon>group</mat-icon></button>
+            <button style="margin-bottom: 1%;" *ngIf='this.pizzaService.table03.observers.length != 0' (click)='this.table03Ask4Pepperoni()' mat-raised-button>Ask for Pepperoni<mat-icon>campaign</mat-icon></button>
+            <button style="margin-bottom: 1%;" *ngIf='this.table03OrderSheet.length != 0' (click)='this.endServiceTable03()' mat-raised-button>Stop<mat-icon>close</mat-icon></button>
+        </div>
+    </div>
+</div>
