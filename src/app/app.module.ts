@@ -11,12 +11,14 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import { ObservablesAndSubjectsComponent } from './observables-and-subjects/observables-and-subjects.component';
 import { HomeComponent } from './home/home.component';
+import { OperatorsComponent } from './operators/operators.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ObservablesAndSubjectsComponent,
-    HomeComponent
+    HomeComponent,
+    OperatorsComponent
   ],
   imports: [
     BrowserModule,
