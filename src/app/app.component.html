@@ -1,7 +1,9 @@
 <div class="navButtons">
-    <button [routerLink]="['/home']" mat-fab color="primary" aria-label="Example icon button with a delete icon">
+    <div style="width: 92px;">
+      <button [routerLink]="['/home']" mat-fab color="primary" aria-label="Example icon button with a delete icon">
         <mat-icon>home</mat-icon>
       </button>
+    </div>
     <button [routerLink]="['/obs-and-sub']" mat-raised-button color="primary">Observables and Subjects</button>
     <button [routerLink]="['/operators']" mat-raised-button color="primary">Operators</button>
 </div>

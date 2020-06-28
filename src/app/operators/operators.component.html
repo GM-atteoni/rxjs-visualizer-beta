@@ -1,1 +1,40 @@
-<p>operators works!</p>
+<div *ngIf='!this.inIntro' class="container">
+    <div class="pizzas">
+        <div class="pizza-container">
+            <div class="pizza">
+                <img *ngIf='this.currentPizza' class="pizzaImg" [src]='this.currentPizza.imgBig' [alt]='this.currentPizza.flavor'>
+            </div>
+            <div class="label">
+                <span *ngIf='this.currentPizza'>Flavor:  {{this.currentPizza.flavor}}</span>
+            </div>
+        </div>
+        <div class="roller">
+            <img class="pizzaHist" *ngFor='let pizza of pizzaAllYouCanEat$' [src]='pizza.img' [alt]='pizza.flavor'>
+        </div> 
+    </div>
+    <div class="interaction">
+
+    </div>
+    <div class="avatar-container">
+        <div class="operator-change">
+            <button mat-button [matMenuTriggerFor]="menu">Operators</button>
+                <mat-menu  yPosition="above" #menu="matMenu">
+                <button (click)='this.changeOperator("Filter")' mat-menu-item>Filter</button>
+                <button (click)='this.changeOperator("Tap")' mat-menu-item>Tap</button>
+            </mat-menu>
+        </div>
+        <div  class="avatar">
+            <div class="avatarPizza">
+                <img *ngIf='this.avatarPizza' class="pizzaImg" [src]='this.avatarPizza.imgBig' [alt]='this.avatarPizza.flavor'>
+            </div>
+            <img src="../../assets/avatar1.png" alt="Avatar">
+            <div class="inner-avatar">
+                <button (click)='this.avatarIn()' class="avatarIcon" mat-fab color="primary"><mat-icon>touch_app</mat-icon></button>
+                <div class="label">
+                    <span>{{this.selectedOperator}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

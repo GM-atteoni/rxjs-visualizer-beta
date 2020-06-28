@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PizzaService } from 'src/services/pizza.service';
 import SavoryPizza from 'src/models/savoryPizza';
+import { delay, concatMap, filter } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-observables-and-subjects',
   templateUrl: './observables-and-subjects.component.html',
   styleUrls: ['./observables-and-subjects.component.scss']
 })
-export class ObservablesAndSubjectsComponent {
+export class ObservablesAndSubjectsComponent implements OnDestroy {
 
   kitchenShowcase = 'Cooking...';
 
@@ -25,6 +27,12 @@ export class ObservablesAndSubjectsComponent {
       this.kitchenShowcase = pizza.flavor;
     })
 
+  }
+  ngOnDestroy(): void {
+    this.endServiceTable01();
+    this.endServiceTable02();
+    this.endServiceTable03();
+    this.endServiceTable04();
   }
 
   customer1OrderSheet;
@@ -92,7 +100,7 @@ export class ObservablesAndSubjectsComponent {
   }
 
   table01Ask4Pepperoni(){
-       this.pizzaService.table01.next(new SavoryPizza('Pepperoni'));
+       this.pizzaService.table01.next(new SavoryPizza('Pepperoni', '../../assets/Pepperoni.png', '../../assets/PepperoniBig.png'));
   }
 
   endServiceTable01(){
@@ -125,7 +133,9 @@ export class ObservablesAndSubjectsComponent {
     this.table02OrderSheet.push(this.pizzaService.table02.subscribe((pizza4Table2Customer1) => {
       this.pizza4Table2Customer1 = pizza4Table2Customer1.flavor;
     }))
-    this.table02OrderSheet.push(this.pizzaService.table02.subscribe((pizza4Table2Customer2) => {
+    this.table02OrderSheet.push(this.pizzaService.table02.pipe(filter((pizza) => {
+      return pizza.flavor != 'Cheese'
+    })).subscribe((pizza4Table2Customer2) => {
       this.pizza4Table2Customer2 = pizza4Table2Customer2.flavor;
     }))
     this.table02OrderSheet.push(this.pizzaService.table02.subscribe((pizza4Table2Customer3) => {
@@ -138,7 +148,7 @@ export class ObservablesAndSubjectsComponent {
   }
 
   table02Ask4Pepperoni(){
-      this.pizzaService.table02.next(new SavoryPizza('Pepperoni'))
+      this.pizzaService.table02.next(new SavoryPizza('Pepperoni', '../../assets/Pepperoni.png', '../../assets/PepperoniBig.png'))
   }
 
   endServiceTable02(){
@@ -186,7 +196,7 @@ export class ObservablesAndSubjectsComponent {
   }
 
   table03Ask4Pepperoni(){
-      this.pizzaService.table03.next(new SavoryPizza('Pepperoni'))
+      this.pizzaService.table03.next(new SavoryPizza('Pepperoni', '../../assets/Pepperoni.png', '../../assets/PepperoniBig.png'))
   }
 
   endServiceTable03(){
@@ -201,6 +211,45 @@ export class ObservablesAndSubjectsComponent {
       });
 
       this.table03OrderSheet = [];
+    
+  }
+
+  pizza4Table4Customer1 = 'Empty'
+  pizza4Table4Customer2 = 'Empty'
+  pizza4Table4Customer3 = 'Empty'
+  pizza4Table4Customer4 = 'Empty'
+
+  table04OrderSheet = [];
+
+  table04(){
+    this.table04OrderSheet.push(this.pizzaService.table04.pipe(
+      concatMap(value => of(value).pipe(delay(500)))
+    ).subscribe((pizza4Table4Customer1) => {
+      this.pizza4Table4Customer1 = pizza4Table4Customer1.flavor;
+    }))
+    this.table04OrderSheet.push(this.pizzaService.table04.pipe(
+      concatMap(value => of(value).pipe(delay(500)))
+    ).subscribe((pizza4Table4Customer2) => {
+      this.pizza4Table4Customer2 = pizza4Table4Customer2.flavor;
+    }))
+
+  }
+
+  table04Ask4Pepperoni(){
+      this.pizzaService.table04.next(new SavoryPizza('Pepperoni', '../../assets/Pepperoni.png', '../../assets/PepperoniBig.png'))
+  }
+
+  endServiceTable04(){
+
+      this.pizza4Table4Customer1 = 'Empty'
+      this.pizza4Table4Customer2 = 'Empty'
+      this.pizza4Table4Customer3 = 'Empty'
+      this.pizza4Table4Customer4 = 'Empty'
+      this.table04OrderSheet.forEach(customer => {
+        customer.unsubscribe();
+      });
+
+      this.table04OrderSheet = [];
     
   }
 

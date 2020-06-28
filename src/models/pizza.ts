@@ -2,9 +2,13 @@ class Pizza {
 
     flavor: string;
     slicesLeft = 8;
+    img: string
+    imgBig: string;
 
-    constructor(flavor){
+    constructor(flavor, img, imgBig){
         this.flavor = flavor;
+        this.img = img;
+        this.imgBig = imgBig;
     }
 
     eatSlice = () => {
