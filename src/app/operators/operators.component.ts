@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { PizzaService } from 'src/services/pizza.service';
 import Pizza from 'src/models/pizza';
 import { filter, tap } from 'rxjs/operators';
@@ -12,7 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './operators.component.html',
   styleUrls: ['./operators.component.scss']
 })
-export class OperatorsComponent {
+export class OperatorsComponent implements AfterViewInit {
 
   pizzaAllYouCanEat$: Pizza[] = [];
   currentPizza: Pizza;
@@ -24,6 +24,15 @@ export class OperatorsComponent {
   selectedOperator: string = 'Filter';
 
   operatorSubscription: Subscription;
+
+  showCode: boolean = false;
+
+  filterText:string = "Filter items emitted by the source Observable by only emitting those that satisfy a specified predicate. In that case our operator is filtering for savory pizza only.";
+  tapText: string = 'Perform a side effect for every emission on the source Observable, but return an Observable that is identical to the source. In our case, the consumer is emmiting a snack bar every time sweet pizza come.';
+
+  textToBeShown: string = '';
+
+  imgSource: string = '../../assets/filter-code.PNG';
 
   constructor(
     private pizzaService: PizzaService,
@@ -37,7 +46,12 @@ export class OperatorsComponent {
 
       dialogRef.afterClosed().subscribe(res => {
         this.startStream();
+        this.startTyping();
       })
+   }  
+   
+   ngAfterViewInit(){
+      console.log(document.getElementById('text'));
    }
 
    startStream(){
@@ -52,6 +66,28 @@ export class OperatorsComponent {
     })
    }
 
+   i = 0;
+   startTyping(){
+     let text = '';
+    switch (this.selectedOperator) {
+      case 'Filter':
+        text = this.filterText;
+        this.imgSource = '../../assets/filter-code.PNG'
+      break;
+      case 'Tap':
+        text = this.tapText;
+        this.imgSource = '../../assets/tap-code.PNG'
+      break;
+    }
+    if (this.i < text.length) {
+      this.textToBeShown += text.charAt(this.i);
+      this.i++;
+      setTimeout(() => {
+        this.startTyping();
+      }, 50);
+    }
+   }
+
    avatarIn(){
      if(this.selectedOperator == 'Filter'){
       this.operatorSubscription = this.pizzaService.hotService.pipe(filter((pizza) => {
@@ -59,7 +95,8 @@ export class OperatorsComponent {
       })).subscribe((pizza) => {
         this.avatarPizza = pizza;
       })
-     }else if(this.selectedOperator == 'Tap'){
+     }
+     else if(this.selectedOperator == 'Tap'){
       this.operatorSubscription = this.pizzaService.hotService.pipe(filter((pizza) => {
         return pizza.constructor.name == 'SweetPizza';
       }),tap(() => {
@@ -68,17 +105,24 @@ export class OperatorsComponent {
         this.avatarPizza = pizza;
       })
      }
-     
    }
 
    changeOperator(type){
-    this.selectedOperator = type;
-    this.resetOperator();
-    this.avatarPizza = new Pizza('', '', '');
+     if(this.selectedOperator != type){
+      this.showCode = false;
+      this.i = 0;
+      this.textToBeShown = '';
+      this.selectedOperator = type;
+      this.resetOperator();
+      this.avatarPizza = null;
+      this.startTyping();
+     }
    }
 
    resetOperator(){
-    this.operatorSubscription.unsubscribe();
+     if(this.operatorSubscription){
+      this.operatorSubscription.unsubscribe();
+     }
    }
 
    openSnackBar() {
