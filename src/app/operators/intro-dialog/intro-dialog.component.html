@@ -23,6 +23,40 @@
 
     </mat-step>
     <mat-step>
+        <ng-template matStepLabel>Pipe Operator</ng-template>
+
+        <p>The pipe operator will be used a lot in this visualizer, make sure to read the informations below and understand how <a href="https://rxjs.dev/api/index/function/pipe">Pipe Operator</a> and <a href="https://rxjs.dev/guide/v6/pipeable-operators">Pipeable Operators</a> works.</p>
+
+        <section>
+            <h3>Pipeable Operators:</h3>
+            <p>
+                The "pipeable" operators is the current and recommended way of using operators since RxJS 5.5. 
+                The main difference is that it's easier to make custom operators and that it's better treeshakable 
+                while not altering some global Observable object that could possible make collisions if two different parties 
+                wanted to create an operator of the same name.
+            </p>
+            <h3>Pipe Operators:</h3>
+            <p>
+                The pipe operator can chain one or more functions creating a new observable. That way you can customize the way you are receiving that data.
+            </p>
+            <h4>How it works:</h4>
+            <p>
+                Lets imagine this case:
+                    <br><br>
+                        <span class="code">Observable.pipe(</span><br>
+                        <span class="code">function1(),</span><br>
+                        <span class="code">function2(),</span><br>
+                        <span class="code">function3()</span><br>
+                        <span class="code">)</span><br>
+                    <br>
+                function1() is going first, it will take the data, process it, modify its value (or not, depending on the operator) and passes it to function2() wich will do 
+                the same thing until it reaches the last function inside the pipe(). Someone who wants to watch this Observable will receive the data manipulated by function 1(), 
+                function2() and function3();
+            </p>
+        </section>
+
+    </mat-step>
+    <mat-step>
         <ng-template matStepLabel>How to use</ng-template>
 
         <section>
