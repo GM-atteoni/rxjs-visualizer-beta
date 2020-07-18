@@ -9,6 +9,9 @@
                 <span *ngIf='this.currentPizza'>Flavor:  {{this.currentPizza.flavor}}</span>
                 <mat-spinner [diameter]='20' *ngIf='!this.currentPizza'></mat-spinner>
             </div>
+            <div class="pizza-progress">
+                <mat-progress-bar mode="buffer" [value]="this.progressbarValue"></mat-progress-bar>
+            </div>
         </div>
         <div class="roller">
             <img class="pizzaHist" *ngFor='let pizza of pizzaAllYouCanEat$' [src]='pizza.img' [alt]='pizza.flavor'>
@@ -38,7 +41,8 @@
                 <button (click)='this.changeOperator("First")' mat-menu-item>First</button>
                 <button (click)='this.changeOperator("Last")' mat-menu-item>Last</button>
                 <button (click)='this.changeOperator("DebounceTime")' mat-menu-item>Debounce Time</button>
-            </mat-menu>
+                <button (click)='this.changeOperator("TakeWhile")' mat-menu-item>Take While</button>
+            </mat-menu> 
         </div>
         <div  class="avatar">
             <div class="avatarPizza">
