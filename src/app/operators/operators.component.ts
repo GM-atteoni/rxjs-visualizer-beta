@@ -1,7 +1,7 @@
   import { Component, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
   import { PizzaService } from 'src/services/pizza.service';
   import Pizza from 'src/models/pizza';
-  import { filter, tap, take, last, first, debounceTime, takeWhile } from 'rxjs/operators';
+  import { filter, tap, take, last, first, debounceTime, takeWhile, map } from 'rxjs/operators';
   import { MatDialog } from '@angular/material/dialog';
   import { IntroDialogComponent } from './intro-dialog/intro-dialog.component';
   import { Subscription, interval, Observable, Observer } from 'rxjs';
@@ -34,6 +34,7 @@
     lastText: string = 'Returns an Observable that emits only the last item emitted by the source Observable. It optionally takes a predicate function as a parameter, in which case, rather than emitting the last item from the source Observable, the resulting Observable will emit the last item from the source Observable that satisfies the predicate. In our case, the consumer is receiving the 3 pizzas after the click (take(3)) and will choose the last (last()) of it.';
     debouceTimeText: string= 'Emits a value from the source Observable only after a particular time span has passed without another source emission. In our case, the kitchen is generating pizzas after 2 seconds and our operator is looking for a 1 second gap without pizzas beeing generated to get the last source value.'
     takeWhileText: string = 'Emits values emitted by the source Observable so long as each value satisfies the given predicate, and then completes as soon as this predicate is not satisfied. In our case the consumer is getting pizzas while only savory pizzas are comming.';
+    mapText: string = 'Applies a given project function to each value emitted by the source Observable, and emits the resulting values as an Observable. In our case the consumer is receiving a random drink with the pizza.'
 
     textToBeShown: string = '';
 
@@ -78,17 +79,19 @@
         this.startTimer();   
       })
     }
-
+  
     i = 0;
+    isTyping: boolean = false;
     startTyping(){
       let text = '';
+      this.isTyping = true;
       switch (this.selectedOperator) {
         case 'Filter':
           text = this.filterText;
           this.imgSource = '../../assets/filter-code.PNG'
         break;
         case 'Tap':
-          text = this.tapText;
+          text = this.tapText;  
           this.imgSource = '../../assets/tap-code.PNG'
         break;
         case 'Take':
@@ -111,19 +114,25 @@
           text = this.takeWhileText;
           this.imgSource = '../../assets/takeWhile-code.PNG'
         break;
+        case 'Map':
+          text = this.mapText;
+          this.imgSource = '../../assets/map-code.PNG'
+        break;
       }
       if (this.i < text.length) {
         this.textToBeShown += text.charAt(this.i);
         this.i++;
         setTimeout(() => {
           this.startTyping();
-        }, 50);
+        }, 25);
+      }else{
+        this.isTyping = false;
       }
     }
 
     avatarIn(){
       
-      if(this.operatorSubscription){
+      if(this.operatorSubscription && this.operatorSubscription.closed == false){
         return false;
       }
 
@@ -181,6 +190,16 @@
           this.avatarPizza = pizza;
         })
       }
+      else if(this.selectedOperator == 'Map'){
+        this.operatorSubscription = this.pizzaService.hotService.pipe(
+          map(pizza => {
+            Math.floor(Math.random() * (Math.floor(3) - Math.ceil(1))) + Math.ceil(1) == 1 ? pizza.juice = 'coke' : pizza.juice = 'orange'
+            return pizza
+          })
+          ).subscribe((pizza) => {
+          this.avatarPizza = pizza;
+        })
+      }
     }
 
     changeOperator(type){
@@ -209,7 +228,7 @@
 
     timer = new Observable<number>((observer: Observer<number>) => {
       interval(250).subscribe(res => {
-        observer.next(res == 0 ? 1 : 15 + (15 * res));
+        observer.next(res == 0 ? 1 : 16 + (16 * res));
         if(res == 7){
           observer.complete();
         }
