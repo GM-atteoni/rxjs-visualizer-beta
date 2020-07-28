@@ -4,6 +4,7 @@ class Pizza {
     slicesLeft = 8;
     img: string
     imgBig: string;
+    juice: string;
 
     constructor(flavor, img, imgBig){
         this.flavor = flavor;
