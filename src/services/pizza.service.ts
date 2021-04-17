@@ -16,7 +16,7 @@ export class PizzaService {
 
   private kitchen: Kitchen = new Kitchen();
 
-  private waiter: Waiter;
+  public waiter: Waiter;
 
   table01: Subject<Pizza>;
   table02: Subject<Pizza>;
@@ -65,13 +65,8 @@ export class PizzaService {
 }
 
 
-
-
 //This is the kitchen, it doesn't matters about what is going on outside. It just produce random pizza.
 class Kitchen {
-
-  constructor(){
-  }
 
   private waiters: Waiter[] = [];
 
@@ -132,9 +127,6 @@ class Kitchen {
 }
 
 
-
-
-
 //this is the waiter
 class Waiter{
 
@@ -148,6 +140,10 @@ class Waiter{
     for(let customer of this.customers){
       customer(pizza);
     }
+  }
+
+  askRandomDrink(): string{
+    return Math.floor(Math.random() * (Math.floor(3) - Math.ceil(1))) + Math.ceil(1) == 1 ? 'coke' : 'orange'
   }
 
 }
