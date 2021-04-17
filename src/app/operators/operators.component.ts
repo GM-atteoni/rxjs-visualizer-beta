@@ -22,7 +22,7 @@
     inIntro: boolean = true;
 
     selectedOperator: string = 'Filter';
-
+    
     operatorSubscription: Subscription;
 
     showCode: boolean = false;
@@ -193,7 +193,8 @@
       else if(this.selectedOperator == 'Map'){
         this.operatorSubscription = this.pizzaService.hotService.pipe(
           map(pizza => {
-            Math.floor(Math.random() * (Math.floor(3) - Math.ceil(1))) + Math.ceil(1) == 1 ? pizza.juice = 'coke' : pizza.juice = 'orange'
+            let randomDrink = this.pizzaService.waiter.askRandomDrink();
+            pizza.juice = randomDrink;
             return pizza
           })
           ).subscribe((pizza) => {

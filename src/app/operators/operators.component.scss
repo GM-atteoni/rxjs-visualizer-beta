@@ -9,6 +9,7 @@
 
 .container{
     font-family: "Indie Flower";
+    height: 90%;
 }
 
 .pizzas{
@@ -28,7 +29,7 @@
 }
 
 .label{
-    border: navajowhite 2px solid;
+    background-color: navajowhite;
     border-radius: 6px;
     width: 100%;
     height: 20%;
@@ -40,6 +41,7 @@
     font-size: 14px;
     padding-left: 4%;
     padding-right: 5%;
+    box-shadow: 10px 10px 16px -8px rgba(0,0,0,0.75);
 }
 
 .pizza-progress{
@@ -94,8 +96,8 @@
 }
 
 .avatar-label{
-    border: navajowhite 2px solid;
     border-radius: 6px;
+    background-color: navajowhite;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -105,6 +107,7 @@
     font-size: 24px;
     padding-left: 4%;
     padding-right: 5%;
+    box-shadow: 10px 10px 16px -8px rgba(0,0,0,0.75);
 }
 
 .avatarIcon{
@@ -114,13 +117,14 @@
 .interaction{
     position: absolute;
     width: 40vw;
-    height: 50vh;
     border: navajowhite 2px solid;
     border-radius: 20px;
     left: 30%;
-    top: 15%;
+    top: 25vh;
     display: flex;
     flex-direction: column;
+    background-color: navajowhite;
+    box-shadow: 10px 10px 66px 3px rgba(0,0,0,0.75);
 }
 
 .interaction-text{
